@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Seed Calculator - M's per Acre</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      margin: 0;
+      padding: 24px;
+      color: #222;
+    }
+
+    .calculator {
+      max-width: 420px;
+      margin: 0 auto;
+      background: #ffffff;
+      padding: 24px;
+      border-radius: 14px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+    }
+
+    h1 {
+      font-size: 24px;
+      margin-top: 0;
+      text-align: center;
+    }
+
+    label {
+      display: block;
+      margin-top: 16px;
+      font-weight: bold;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin-top: 6px;
+      font-size: 18px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      box-sizing: border-box;
+    }
+
+    .result-box {
+      margin-top: 24px;
+      padding: 20px;
+      background: #eef3f7;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .result-label {
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #555;
+    }
+
+    .result {
+      font-size: 40px;
+      font-weight: bold;
+      margin-top: 8px;
+    }
+
+    .note {
+      margin-top: 18px;
+      font-size: 13px;
+      color: #666;
+      text-align: center;
+      line-height: 1.4;
+    }
+  </style>
+</head>
+<body>
+  <div class="calculator">
+    <h1>Seed Calculator</h1>
+
+    <label for="bedSize">Bed Size (inches)</label>
+    <input id="bedSize" type="number" step="0.01" inputmode="decimal" placeholder="Enter bed size" />
+
+    <label for="seedLines">Seed Lines</label>
+    <input id="seedLines" type="number" step="0.01" inputmode="decimal" placeholder="Enter seed lines" />
+
+    <label for="spacing">In-Row Spacing (inches)</label>
+    <input id="spacing" type="number" step="0.01" inputmode="decimal" placeholder="Enter spacing" />
+
+    <div class="result-box">
+      <div class="result-label">M's per Acre</div>
+      <div id="result" class="result">--</div>
+    </div>
+
+    <div class="note">
+      Formula: 43,560 ÷ ((spacing ÷ 12) × (bed size ÷ 12)) × seed lines ÷ 1,000
+    </div>
+  </div>
+
+  <script>
+    const bedSizeInput = document.getElementById('bedSize');
+    const seedLinesInput = document.getElementById('seedLines');
+    const spacingInput = document.getElementById('spacing');
+    const resultDisplay = document.getElementById('result');
+
+    function calculateMsPerAcre() {
+      const bedSize = parseFloat(bedSizeInput.value);
+      const seedLines = parseFloat(seedLinesInput.value);
+      const spacing = parseFloat(spacingInput.value);
+
+      if (!bedSize || !seedLines || !spacing || bedSize <= 0 || seedLines <= 0 || spacing <= 0) {
+        resultDisplay.textContent = '--';
+        return;
+      }
+
+      const msPerAcre = (43560 / ((spacing / 12) * (bedSize / 12)) * seedLines) / 1000;
+      resultDisplay.textContent = msPerAcre.toFixed(2);
+    }
+
+    bedSizeInput.addEventListener('input', calculateMsPerAcre);
+    seedLinesInput.addEventListener('input', calculateMsPerAcre);
+    spacingInput.addEventListener('input', calculateMsPerAcre);
+  </script>
+</body>
+</html>
